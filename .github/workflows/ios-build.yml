@@ -1,0 +1,60 @@
+name: Build iOS Companion (.ipa)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ios-sim-sync/**'
+      - '.github/workflows/ios-build.yml'
+
+jobs:
+  build-ios:
+    name: Build iOS App (.ipa)
+    runs-on: macos-14
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Set Up Xcode
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.4.app || sudo xcode-select -s /Applications/Xcode.app
+          xcodebuild -version
+
+      - name: 📦 Build Xcode Archive
+        run: |
+          mkdir -p build
+          xcodebuild -project ios-sim-sync/ArthoVistaCRMSync.xcodeproj \
+            -scheme ArthoVistaCRMSync \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath build/ArthoVistaCRMSync.xcarchive \
+            archive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES
+
+      - name: 📱 Package IPA from Archive
+        run: |
+          mkdir -p build/Payload
+          cp -r build/ArthoVistaCRMSync.xcarchive/Products/Applications/ArthoVistaCRMSync.app build/Payload/
+          cd build
+          zip -r ArthoVistaCRMSync.ipa Payload
+          cd ..
+          echo "IPA packaging complete: build/ArthoVistaCRMSync.ipa"
+          ls -lh build/ArthoVistaCRMSync.ipa
+
+      - name: 🚀 Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArthoVistaCRMSync-iOS-IPA
+          path: build/ArthoVistaCRMSync.ipa
+          retention-days: 30
+
+      - name: 📂 Upload XCArchive Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArthoVistaCRMSync-XCArchive
+          path: build/ArthoVistaCRMSync.xcarchive
+          retention-days: 14
