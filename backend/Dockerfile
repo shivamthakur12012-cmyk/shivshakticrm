@@ -1,22 +1,52 @@
-# Build stage
-FROM node:18-alpine AS builder
+
+# Stage 1: Build
+FROM node:20-bookworm-slim AS builder
+
 WORKDIR /app
+
+# Install OpenSSL for Prisma
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
+
 RUN npm install
-COPY . .
+
+COPY prisma ./prisma
+
+# Generate Prisma Client for Debian
 RUN npx prisma generate
+
+COPY . .
+
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine
+
+# Stage 2: Production
+FROM node:20-bookworm-slim
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm install --only=production
-COPY prisma ./prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/dist ./dist
-# Re-create folders for uploads if needed
-RUN mkdir -p uploads
-EXPOSE 5000
+
 ENV NODE_ENV=production
+
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm install --omit=dev
+
+COPY prisma ./prisma
+
+# Copy generated Prisma Client and engine
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+
+# Copy compiled backend
+COPY --from=builder /app/dist ./dist
+
+RUN mkdir -p uploads
+
+EXPOSE 5000
+
 CMD ["node", "dist/server.js"]
