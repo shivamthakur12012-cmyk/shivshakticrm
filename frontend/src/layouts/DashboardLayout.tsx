@@ -469,22 +469,22 @@ export const DashboardLayout: React.FC = () => {
       {/* 2. Mobile Sidebar Overlay */}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-50 flex">
-          <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onClick={() => setMobileOpen(false)}></div>
+          <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity" onClick={() => setMobileOpen(false)}></div>
           <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-dark-900 border-r border-slate-200 dark:border-dark-800 shadow-2xl">
-            <div className="absolute top-0 right-0 -mr-12 pt-3">
+            <div className="flex items-center justify-between h-16 px-5 border-b border-slate-100 dark:border-dark-800">
+              <div className="flex items-center space-x-2.5">
+                <img src="/logo.svg" alt="PCS Logo" className="h-8 w-auto max-w-[110px] object-contain dark:brightness-110 flex-shrink-0" />
+                <span className="text-[10px] font-black bg-[linear-gradient(45deg,#ef4444_0%,#6366f1_50%,#2563eb_100%)] text-white px-2 py-0.5 rounded-md shadow-sm uppercase tracking-wider">
+                  CRM
+                </span>
+              </div>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="ml-1 flex items-center justify-center h-9 w-9 rounded-full bg-white/20 text-white focus:outline-none"
+                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-dark-800 focus:outline-none transition"
+                aria-label="Close navigation menu"
               >
                 <X className="h-5 w-5" />
               </button>
-            </div>
-
-            <div className="flex items-center h-16 px-5 border-b border-slate-100 dark:border-dark-800 space-x-3">
-              <img src="/logo.svg" alt="PCS Logo" className="h-8 w-auto max-w-[110px] object-contain dark:brightness-110 flex-shrink-0" />
-              <span className="text-[10px] font-black bg-[linear-gradient(45deg,#ef4444_0%,#6366f1_50%,#2563eb_100%)] text-white px-2 py-0.5 rounded-md shadow-sm uppercase tracking-wider">
-                CRM
-              </span>
             </div>
 
             <div className="flex-1 flex flex-col overflow-y-auto px-4 py-4 space-y-3">
@@ -507,6 +507,7 @@ export const DashboardLayout: React.FC = () => {
                 <button
                   onClick={handleLogout}
                   className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition"
+                  title="Sign Out"
                 >
                   <LogOut className="h-4 w-4" />
                 </button>
@@ -519,22 +520,38 @@ export const DashboardLayout: React.FC = () => {
       {/* 3. Main Workspace Area */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Top Header Bar */}
-        <header className="h-16 flex items-center justify-between bg-white/95 backdrop-blur-md dark:bg-dark-900/95 border-b border-slate-200 dark:border-dark-800 px-6 z-10 sticky top-0 shadow-xs relative">
+        <header className="h-14 sm:h-16 flex items-center justify-between bg-white/95 backdrop-blur-md dark:bg-dark-900/95 border-b border-slate-200 dark:border-dark-800 px-3 sm:px-6 z-10 sticky top-0 shadow-xs relative">
           {/* 45° Red & Blue gradient hairline */}
           <div className="h-[2px] w-full bg-[linear-gradient(45deg,#ef4444_0%,#6366f1_50%,#2563eb_100%)] absolute top-0 left-0"></div>
-          <div className="flex items-center space-x-4 min-w-0">
-            <h1 className="text-xl md:text-xl font-extrabold text-slate-950 dark:text-white tracking-tight leading-tight">
-              {getGreeting()}, {user?.firstName || 'Shivam'}! 🙏
-            </h1>
+
+          {/* Left: Mobile Menu & Logo on mobile, Greeting on desktop */}
+          <div className="flex items-center space-x-2 sm:space-x-4 min-w-0">
+            {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="md:hidden text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white p-1 focus:outline-none"
+              className="md:hidden p-1.5 rounded-xl text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-dark-800 focus:outline-none transition"
+              aria-label="Open navigation menu"
             >
               <Menu className="h-5 w-5" />
             </button>
 
-            {/* Breadcrumb / Location Badge & Subscription Plan Badge */}
-            <div className="hidden sm:flex items-center space-x-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+            {/* Mobile Brand Logo */}
+            <Link to="/dashboard" className="md:hidden flex items-center space-x-1.5 flex-shrink-0" title="PCS CRM">
+              <img src="/logo.svg" alt="PCS Logo" className="h-7 w-auto max-w-[70px] object-contain dark:brightness-110" />
+              <span className="text-[9px] font-black bg-[linear-gradient(45deg,#ef4444_0%,#6366f1_50%,#2563eb_100%)] text-white px-1.5 py-0.5 rounded shadow-xs uppercase tracking-wider">
+                CRM
+              </span>
+            </Link>
+
+            {/* Desktop Greeting */}
+            <div className="hidden md:block">
+              <h1 className="text-lg lg:text-xl font-extrabold text-slate-950 dark:text-white tracking-tight leading-tight truncate">
+                {getGreeting()}, {user?.firstName || 'Shivam'}! 🙏
+              </h1>
+            </div>
+
+            {/* Badges (desktop / tablet) */}
+            <div className="hidden lg:flex items-center space-x-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
               <div className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-slate-50 dark:bg-dark-800 border border-slate-200 dark:border-dark-700">
                 <Building2 className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
                 <span className="text-slate-300 dark:text-dark-600">&bull;</span>
@@ -576,8 +593,8 @@ export const DashboardLayout: React.FC = () => {
           </div>
 
           {/* Right Header: Search, Actions, Theme Toggle, Profile */}
-          <div className="flex items-center space-x-3">
-            {/* Quick Add Lead Button - 45° Red & Blue Gradient CTA */}
+          <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
+            {/* Quick Add Lead Button */}
             <button
               onClick={() => {
                 if (location.pathname === '/crm/leads') {
@@ -586,28 +603,29 @@ export const DashboardLayout: React.FC = () => {
                   navigate('/crm/leads?new=true');
                 }
               }}
-              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-[linear-gradient(45deg,#ef4444_0%,#6366f1_50%,#2563eb_100%)] hover:brightness-110 text-white font-black text-xs shadow-md transition active:scale-95 cursor-pointer"
+              className="inline-flex items-center space-x-1 sm:space-x-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-[linear-gradient(45deg,#ef4444_0%,#6366f1_50%,#2563eb_100%)] hover:brightness-110 text-white font-black text-xs shadow-md transition active:scale-95 cursor-pointer"
               title="Add New Lead"
             >
-              <PlusCircle className="h-3.5 w-3.5" />
+              <PlusCircle className="h-3.5 w-3.5 flex-shrink-0" />
               <span>Add Lead</span>
             </button>
 
-            {/* Bulk Upload Leads Button - 45° Reverse Red & Blue Gradient CTA */}
+            {/* Bulk Upload Leads Button - Hidden on small mobile to prevent header blowout */}
             <Link
               to="/crm/bulk-upload"
-              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-[linear-gradient(45deg,#2563eb_0%,#6366f1_50%,#ef4444_100%)] hover:brightness-110 text-white font-black text-xs shadow-md transition active:scale-95"
+              className="hidden sm:inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-[linear-gradient(45deg,#2563eb_0%,#6366f1_50%,#ef4444_100%)] hover:brightness-110 text-white font-black text-xs shadow-md transition active:scale-95"
               title="Bulk Upload Leads via CSV/Excel"
             >
-              <Upload className="h-3.5 w-3.5" />
-              <span>Bulk Upload Leads</span>
+              <Upload className="h-3.5 w-3.5 flex-shrink-0" />
+              <span>Bulk Upload</span>
             </Link>
 
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white p-2 rounded-xl hover:bg-orange-50 dark:hover:bg-dark-800 transition"
+              className="text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white p-1.5 sm:p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-dark-800 transition"
               title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+              aria-label="Toggle theme"
             >
               {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-amber-400" />}
             </button>
@@ -615,7 +633,7 @@ export const DashboardLayout: React.FC = () => {
         </header>
 
         {/* Dynamic Page Scroll Content */}
-        <main className="flex-1 overflow-y-auto bg-slate-50/60 dark:bg-dark-950 p-5 md:p-7">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-50/60 dark:bg-dark-950 p-3.5 sm:p-5 md:p-7">
           <Outlet />
         </main>
       </div>

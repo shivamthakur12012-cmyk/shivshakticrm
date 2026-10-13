@@ -121,32 +121,44 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10">
+    <div className="space-y-4 sm:space-y-6 max-w-7xl mx-auto pb-10">
+      {/* Mobile/Tablet Welcome Greeting Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 md:hidden">
+        <div>
+          <h2 className="text-lg font-black text-slate-950 dark:text-white tracking-tight">
+            Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'}, {user?.firstName || 'Amar'}! 🙏
+          </h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
+            Here is your live CRM pipeline & lead velocity overview.
+          </p>
+        </div>
+      </div>
+
       {/* 2. Key 5 CRM Stage KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-4">
         {/* Card 1: Total Leads */}
         <Link
           to="/crm/leads"
-          className="group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-blue-500 dark:hover:border-blue-400 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
+          className="min-w-0 group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-blue-500 dark:hover:border-blue-400 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider truncate">
               {!isPrivileged ? '1. My Assigned' : '1. Total Leads'}
             </span>
-            <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold flex-shrink-0">
               <Users className="h-4 w-4" />
             </div>
           </div>
 
-          <div className="mt-4">
-            <div className="text-3xl font-black text-slate-950 dark:text-white tracking-tight">
+          <div className="mt-3 sm:mt-4">
+            <div className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white tracking-tight">
               {summary.totalLeads}
             </div>
-            <div className="flex items-center space-x-1 text-xs text-emerald-700 dark:text-emerald-400 font-bold mt-1.5">
-              <TrendingUp className="h-3 w-3" />
-              <span>100% Inbound Tracking</span>
+            <div className="flex items-center space-x-1 text-[11px] sm:text-xs text-emerald-700 dark:text-emerald-400 font-bold mt-1 truncate">
+              <TrendingUp className="h-3 w-3 flex-shrink-0" />
+              <span>100% Inbound</span>
             </div>
           </div>
         </Link>
@@ -154,24 +166,24 @@ export const Dashboard: React.FC = () => {
         {/* Card 2: Open Leads */}
         <Link
           to="/crm/open-leads"
-          className="group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
+          className="min-w-0 group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider truncate">
               2. Open Leads
             </span>
-            <div className="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold flex-shrink-0">
               <UserCheck className="h-4 w-4" />
             </div>
           </div>
 
-          <div className="mt-4">
-            <div className="text-3xl font-black text-indigo-700 dark:text-indigo-300 tracking-tight">
+          <div className="mt-3 sm:mt-4">
+            <div className="text-2xl sm:text-3xl font-black text-indigo-700 dark:text-indigo-300 tracking-tight">
               {summary.openLeads}
             </div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 font-semibold mt-1.5 truncate">
+            <div className="text-[11px] sm:text-xs text-slate-700 dark:text-slate-300 font-semibold mt-1 truncate">
               ₹{summary.totalPipelineValue.toLocaleString()} Pipeline
             </div>
           </div>
@@ -180,25 +192,25 @@ export const Dashboard: React.FC = () => {
         {/* Card 3: Follow-ups */}
         <Link
           to="/crm/followup-leads"
-          className="group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-amber-500 dark:hover:border-amber-400 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
+          className="min-w-0 group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-amber-500 dark:hover:border-amber-400 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider truncate">
               3. Follow up
             </span>
-            <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold flex-shrink-0">
               <PhoneCall className="h-4 w-4" />
             </div>
           </div>
 
-          <div className="mt-4">
-            <div className="text-3xl font-black text-amber-700 dark:text-amber-300 tracking-tight">
+          <div className="mt-3 sm:mt-4">
+            <div className="text-2xl sm:text-3xl font-black text-amber-700 dark:text-amber-300 tracking-tight">
               {summary.totalFollowups}
             </div>
-            <div className="text-xs text-amber-700 dark:text-amber-300 font-bold mt-1.5">
-              {summary.todayFollowupsCount} Scheduled Today
+            <div className="text-[11px] sm:text-xs text-amber-700 dark:text-amber-300 font-bold mt-1 truncate">
+              {summary.todayFollowupsCount} Today
             </div>
           </div>
         </Link>
@@ -206,25 +218,25 @@ export const Dashboard: React.FC = () => {
         {/* Card 4: Converted Leads */}
         <Link
           to="/crm/converted-leads"
-          className="group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-emerald-500 dark:hover:border-emerald-400 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
+          className="min-w-0 group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-emerald-500 dark:hover:border-emerald-400 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider truncate">
               4. Converted
             </span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold flex-shrink-0">
               <Award className="h-4 w-4" />
             </div>
           </div>
 
-          <div className="mt-4">
-            <div className="text-3xl font-black text-emerald-700 dark:text-emerald-300 tracking-tight">
+          <div className="mt-3 sm:mt-4">
+            <div className="text-2xl sm:text-3xl font-black text-emerald-700 dark:text-emerald-300 tracking-tight">
               {summary.convertedLeads}
             </div>
-            <div className="text-xs text-emerald-700 dark:text-emerald-300 font-bold mt-1.5">
-              {summary.conversionRate}% Conversion Rate
+            <div className="text-[11px] sm:text-xs text-emerald-700 dark:text-emerald-300 font-bold mt-1 truncate">
+              {summary.conversionRate}% Won Rate
             </div>
           </div>
         </Link>
@@ -232,24 +244,24 @@ export const Dashboard: React.FC = () => {
         {/* Card 5: Lost Leads */}
         <Link
           to="/crm/lost-leads"
-          className="group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-rose-500 dark:hover:border-rose-400 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
+          className="min-w-0 col-span-2 sm:col-span-2 lg:col-span-1 group relative bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 hover:border-rose-500 dark:hover:border-rose-400 rounded-2xl p-3.5 sm:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider truncate">
               5. Lost Leads
             </span>
-            <div className="w-9 h-9 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 flex items-center justify-center group-hover:scale-110 transition-transform font-bold flex-shrink-0">
               <UserX className="h-4 w-4" />
             </div>
           </div>
 
-          <div className="mt-4">
-            <div className="text-3xl font-black text-rose-700 dark:text-rose-300 tracking-tight">
+          <div className="mt-3 sm:mt-4">
+            <div className="text-2xl sm:text-3xl font-black text-rose-700 dark:text-rose-300 tracking-tight">
               {summary.lostLeads}
             </div>
-            <div className="text-xs text-rose-700 dark:text-rose-300 font-bold mt-1.5">
+            <div className="text-[11px] sm:text-xs text-rose-700 dark:text-rose-300 font-bold mt-1 truncate">
               {summary.lossRate}% Lost Rate
             </div>
           </div>
@@ -257,16 +269,16 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* 3. Main Graphical Visualizations */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left 2 Cols: Main CRM Trend Area/Bar Graph */}
-        <div className="lg:col-span-2 bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-3xl p-6 md:p-7 shadow-sm space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="lg:col-span-2 min-w-0 overflow-hidden bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-7 shadow-sm space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
             <div>
               <div className="flex items-center space-x-2">
-                <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">
+                <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex-shrink-0">
                   <Target className="h-4 w-4" />
                 </div>
-                <h3 className="text-base font-extrabold text-slate-950 dark:text-white">
+                <h3 className="text-sm sm:text-base font-extrabold text-slate-950 dark:text-white">
                   CRM Lifecycle Velocity & Trends
                 </h3>
               </div>
@@ -276,7 +288,7 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/* Chart View Switcher */}
-            <div className="flex items-center space-x-1 bg-slate-100 dark:bg-dark-800 p-1 rounded-xl text-xs font-bold border border-slate-200 dark:border-dark-700">
+            <div className="flex items-center space-x-1 bg-slate-100 dark:bg-dark-800 p-1 rounded-xl text-xs font-bold border border-slate-200 dark:border-dark-700 self-start sm:self-auto">
               <button
                 onClick={() => setChartView('area')}
                 className={`px-3 py-1.5 rounded-lg transition-all ${chartView === 'area'
@@ -299,8 +311,8 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* Graphical Display */}
-          <div className="h-80 w-full pt-2">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="h-64 sm:h-80 w-full pt-2 min-w-0 overflow-hidden">
+            <ResponsiveContainer width="100%" height="100%" debounce={50} minWidth={0}>
               {chartView === 'area' ? (
                 <AreaChart data={monthlyTrends} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
@@ -329,6 +341,7 @@ export const Dashboard: React.FC = () => {
                   <XAxis dataKey="month" stroke="#475569" fontSize={11} fontWeight={600} tickLine={false} axisLine={false} />
                   <YAxis stroke="#475569" fontSize={11} fontWeight={600} tickLine={false} axisLine={false} />
                   <Tooltip
+                    isAnimationActive={false}
                     contentStyle={{
                       backgroundColor: '#ffffff',
                       border: '1px solid #cbd5e1',
@@ -340,11 +353,11 @@ export const Dashboard: React.FC = () => {
                     }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', fontWeight: 600, paddingTop: '12px', color: '#1e293b' }} />
-                  <Area type="monotone" dataKey="leads" name="1. Total Leads" stroke="#2563eb" strokeWidth={2.5} fillOpacity={1} fill="url(#gradLeads)" />
-                  <Area type="monotone" dataKey="open" name="2. Open Leads" stroke="#4f46e5" strokeWidth={2} fillOpacity={1} fill="url(#gradOpen)" />
-                  <Area type="monotone" dataKey="followups" name="3. Follow-ups" stroke="#d97706" strokeWidth={2.5} fillOpacity={1} fill="url(#gradFollowups)" />
-                  <Area type="monotone" dataKey="converted" name="4. Converted" stroke="#059669" strokeWidth={2} fillOpacity={1} fill="url(#gradConverted)" />
-                  <Area type="monotone" dataKey="lost" name="5. Lost Leads" stroke="#dc2626" strokeWidth={2} fillOpacity={1} fill="url(#gradLost)" />
+                  <Area isAnimationActive={false} type="monotone" dataKey="leads" name="1. Total Leads" stroke="#2563eb" strokeWidth={2.5} fillOpacity={1} fill="url(#gradLeads)" />
+                  <Area isAnimationActive={false} type="monotone" dataKey="open" name="2. Open Leads" stroke="#4f46e5" strokeWidth={2} fillOpacity={1} fill="url(#gradOpen)" />
+                  <Area isAnimationActive={false} type="monotone" dataKey="followups" name="3. Follow-ups" stroke="#d97706" strokeWidth={2.5} fillOpacity={1} fill="url(#gradFollowups)" />
+                  <Area isAnimationActive={false} type="monotone" dataKey="converted" name="4. Converted" stroke="#059669" strokeWidth={2} fillOpacity={1} fill="url(#gradConverted)" />
+                  <Area isAnimationActive={false} type="monotone" dataKey="lost" name="5. Lost Leads" stroke="#dc2626" strokeWidth={2} fillOpacity={1} fill="url(#gradLost)" />
                 </AreaChart>
               ) : (
                 <BarChart data={monthlyTrends} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -352,6 +365,7 @@ export const Dashboard: React.FC = () => {
                   <XAxis dataKey="month" stroke="#475569" fontSize={11} fontWeight={600} tickLine={false} axisLine={false} />
                   <YAxis stroke="#475569" fontSize={11} fontWeight={600} tickLine={false} axisLine={false} />
                   <Tooltip
+                    isAnimationActive={false}
                     contentStyle={{
                       backgroundColor: '#ffffff',
                       border: '1px solid #cbd5e1',
@@ -363,11 +377,11 @@ export const Dashboard: React.FC = () => {
                     }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', fontWeight: 600, paddingTop: '12px', color: '#1e293b' }} />
-                  <Bar dataKey="leads" name="1. Total Leads" fill="#2563eb" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="open" name="2. Open Leads" fill="#4f46e5" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="followups" name="3. Follow-ups" fill="#d97706" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="converted" name="4. Converted" fill="#059669" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="lost" name="5. Lost Leads" fill="#dc2626" radius={[4, 4, 0, 0]} />
+                  <Bar isAnimationActive={false} dataKey="leads" name="1. Total Leads" fill="#2563eb" radius={[4, 4, 0, 0]} />
+                  <Bar isAnimationActive={false} dataKey="open" name="2. Open Leads" fill="#4f46e5" radius={[4, 4, 0, 0]} />
+                  <Bar isAnimationActive={false} dataKey="followups" name="3. Follow-ups" fill="#d97706" radius={[4, 4, 0, 0]} />
+                  <Bar isAnimationActive={false} dataKey="converted" name="4. Converted" fill="#059669" radius={[4, 4, 0, 0]} />
+                  <Bar isAnimationActive={false} dataKey="lost" name="5. Lost Leads" fill="#dc2626" radius={[4, 4, 0, 0]} />
                 </BarChart>
               )}
             </ResponsiveContainer>
@@ -375,7 +389,7 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Right 1 Col: Status Distribution & Funnel Donut */}
-        <div className="bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-3xl p-6 md:p-7 shadow-sm flex flex-col justify-between space-y-4">
+        <div className="min-w-0 overflow-hidden bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-7 shadow-sm flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center justify-between">
               <h3 className="text-base font-extrabold text-slate-950 dark:text-white">
@@ -391,10 +405,11 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* Donut Chart */}
-          <div className="h-52 w-full flex items-center justify-center relative">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="h-52 w-full flex items-center justify-center relative min-w-0 overflow-hidden">
+            <ResponsiveContainer width="100%" height="100%" debounce={50} minWidth={0}>
               <PieChart>
                 <Pie
+                  isAnimationActive={false}
                   data={summary.totalLeads > 0 ? statusBreakdown.filter((s: any) => s.value > 0) : [{ name: 'No Active Leads', value: 1 }]}
                   cx="50%"
                   cy="50%"
@@ -416,6 +431,7 @@ export const Dashboard: React.FC = () => {
                 </Pie>
                 {summary.totalLeads > 0 && (
                   <Tooltip
+                    isAnimationActive={false}
                     contentStyle={{
                       backgroundColor: '#ffffff',
                       border: '1px solid #cbd5e1',
@@ -531,12 +547,12 @@ export const Dashboard: React.FC = () => {
       )}
 
       {/* 4. Multi-Channel Follow-up & Lost Leads Analytics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Follow-up Channels Breakdown */}
-        <div className="bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-3xl p-6 md:p-7 shadow-sm space-y-4">
+        <div className="min-w-0 overflow-hidden bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-7 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-base font-extrabold text-slate-950 dark:text-white flex items-center space-x-2">
+              <h3 className="text-sm sm:text-base font-extrabold text-slate-950 dark:text-white flex items-center space-x-2">
                 <div className="p-1 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-700">
                   <PhoneCall className="h-4 w-4" />
                 </div>
@@ -548,20 +564,21 @@ export const Dashboard: React.FC = () => {
             </div>
             <Link
               to="/crm/followup-leads"
-              className="text-xs font-bold text-blue-700 dark:text-blue-300 hover:underline inline-flex items-center"
+              className="text-xs font-bold text-blue-700 dark:text-blue-300 hover:underline inline-flex items-center flex-shrink-0"
             >
               <span>View Leads</span>
               <ChevronRight className="h-4 w-4 ml-0.5" />
             </Link>
           </div>
 
-          <div className="h-48 w-full pt-2">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="h-48 w-full pt-2 min-w-0 overflow-hidden">
+            <ResponsiveContainer width="100%" height="100%" debounce={50} minWidth={0}>
               <BarChart data={channelBreakdown} layout="vertical" margin={{ top: 5, right: 20, left: 30, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" className="dark:stroke-dark-800" />
                 <XAxis type="number" stroke="#475569" fontSize={11} fontWeight={600} tickLine={false} axisLine={false} />
                 <YAxis type="category" dataKey="channel" stroke="#475569" fontSize={11} fontWeight={600} tickLine={false} axisLine={false} width={85} />
                 <Tooltip
+                  isAnimationActive={false}
                   contentStyle={{
                     backgroundColor: '#ffffff',
                     border: '1px solid #cbd5e1',
@@ -572,7 +589,7 @@ export const Dashboard: React.FC = () => {
                     boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
                   }}
                 />
-                <Bar dataKey="count" name="Touchpoints" radius={[0, 6, 6, 0]}>
+                <Bar isAnimationActive={false} dataKey="count" name="Touchpoints" radius={[0, 6, 6, 0]}>
                   {channelBreakdown.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fill} />
                   ))}
@@ -583,10 +600,10 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Lost Leads Reason & Drop-Off Diagnostic */}
-        <div className="bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-3xl p-6 md:p-7 shadow-sm space-y-4">
+        <div className="min-w-0 overflow-hidden bg-white dark:bg-dark-900 border border-slate-300 dark:border-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-7 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-base font-extrabold text-slate-950 dark:text-white flex items-center space-x-2">
+              <h3 className="text-sm sm:text-base font-extrabold text-slate-950 dark:text-white flex items-center space-x-2">
                 <div className="p-1 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-700">
                   <UserX className="h-4 w-4" />
                 </div>
@@ -598,7 +615,7 @@ export const Dashboard: React.FC = () => {
             </div>
             <Link
               to="/crm/lost-leads"
-              className="text-xs font-bold text-rose-700 dark:text-rose-400 hover:underline inline-flex items-center"
+              className="text-xs font-bold text-rose-700 dark:text-rose-400 hover:underline inline-flex items-center flex-shrink-0"
             >
               <span>View Lost</span>
               <ChevronRight className="h-4 w-4 ml-0.5" />
