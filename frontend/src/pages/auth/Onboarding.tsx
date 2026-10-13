@@ -156,7 +156,10 @@ export const Onboarding: React.FC = () => {
             {user && (
               <button
                 type="button"
-                onClick={() => {
+                onClick={async () => {
+                  try {
+                    await api.post('/auth/logout');
+                  } catch {}
                   logout();
                   navigate('/login');
                 }}

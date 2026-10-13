@@ -37,14 +37,14 @@ export const DashboardLayout: React.FC = () => {
     }
   }, [activeOrg?.id, activeOrganizationId, setActiveOrganizationId]);
 
-  // Auto-sync session profile & organizations from server using React Query (deduplicated & cached)
+  // Auto-sync session profile & organizations from server using React Query (deduplicated & scoped to current user)
   const { data: meData } = useQuery({
-    queryKey: ['auth-me'],
+    queryKey: ['auth-me', user?.id],
     queryFn: async () => {
       const res = await api.get('/auth/me');
       return res.data?.data;
     },
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !!user?.id,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -169,7 +169,10 @@ export const DashboardLayout: React.FC = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await api.post('/auth/logout');
+    } catch {}
     logout();
     navigate('/login');
   };

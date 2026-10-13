@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { queryClient } from '../queryClient';
 
 export interface UserProfile {
   id: string;
@@ -119,6 +120,11 @@ export const useAuthStore = create<AuthState>((set) => {
     },
 
     login: (token, user, organizations) => {
+      // Invalidate any old session query cache
+      try {
+        queryClient.clear();
+      } catch {}
+
       localStorage.setItem('artha_token', token);
       localStorage.setItem('artha_user', JSON.stringify(user));
       localStorage.setItem('artha_organizations', JSON.stringify(organizations));
@@ -138,6 +144,11 @@ export const useAuthStore = create<AuthState>((set) => {
     },
 
     logout: () => {
+      // Completely purge all React Query cache so previous user profile / CRM data is never leaked or reused
+      try {
+        queryClient.clear();
+      } catch {}
+
       localStorage.removeItem('artha_token');
       localStorage.removeItem('artha_user');
       localStorage.removeItem('artha_organizations');

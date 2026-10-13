@@ -38,7 +38,10 @@ export const SubscriptionPaywall: React.FC = () => {
     }
   }, [isSuperAdmin, navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await api.post('/auth/logout');
+    } catch {}
     logout();
     navigate('/login');
   };
